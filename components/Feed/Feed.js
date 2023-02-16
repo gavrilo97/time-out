@@ -19,7 +19,7 @@ const Feed = (props) => {
 
   return (
     <div
-      className={`h-full w-full flex flex-row flex-wrap items-start ${
+      className={` w-full flex flex-row flex-wrap max-md:place-content-center  items-start ${
         layout === "block" ? "gap-4" : "gap-8"
       }`}
     >
@@ -31,7 +31,7 @@ const Feed = (props) => {
               <div
                 key={idx}
                 className={`bg-secondary  ${
-                  layout === "block" ? "w-2/5" : "w-full"
+                  layout === "block" ? "w-1/2 md:w-2/5" : "w-full"
                 } rounded-lg grid `}
                 style={{
                   gridTemplateColumns: layout === "block" ? "none" : "2fr 4fr",
@@ -96,7 +96,7 @@ const Feed = (props) => {
           <div
             key={idx}
             className={`bg-secondary  ${
-              layout === "block" ? "w-2/5" : "w-full"
+              layout === "block" ? "w-1/2 md:w-2/5" : "w-full"
             } rounded-lg grid `}
             style={{
               gridTemplateColumns: layout === "block" ? "none" : "2fr 4fr",

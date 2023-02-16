@@ -10,6 +10,7 @@ import Nis from "@/public/images/nis_banner.png";
 import Mercator from "@/public/images/mercator_banner.png";
 import Mozzart from "@/public/images/mozzart_banner.png";
 import Carousel from "@/components/Carousel";
+import s from "./page.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,16 +72,13 @@ export default async function Home() {
 
   return (
     <main className="w-full bg-grayBase bg-white grid place-items-center py-12 gap-8">
-      <div className="w-4/5">
+      <div className="w-11/12 md:w-4/5">
         <Carousel slides={slides} />
       </div>
-      <div
-        className="h-full w-4/5 grid "
-        style={{ gridTemplateColumns: "2fr 1fr" }}
-      >
+      <div className={`w-full md:w-4/5 grid ${s.feedContainer} gap-8 md:gap-0`}>
         <Feed data={feed?.items || []} layout={"block"} limit={10} />
 
-        <div className="w-full h-full flex flex-col gap-8">
+        <div className="w-11/12 md:w-full max-md:place-self-center flex flex-col gap-8">
           <FeedAside
             data={feedPartizanFiltered}
             bgColor={"#333"}

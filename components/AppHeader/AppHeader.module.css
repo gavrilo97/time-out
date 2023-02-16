@@ -1,0 +1,12 @@
+.headerContainer{
+    grid-template-columns: 1fr 3fr;
+}
+.navBarDrawer {
+    transition: width 250ms ease;
+}
+
+@media(max-width: 960px) {
+        .headerContainer{
+            grid-template-columns: 2fr 3fr;
+        }
+}
