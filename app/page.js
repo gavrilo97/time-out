@@ -1,0 +1,100 @@
+import { Inter } from "@next/font/google";
+import Parser from "rss-parser";
+import Feed from "@/components/Feed";
+import FeedAside from "@/components/FeedAside";
+import PartizanLogo from "@/public/images/partizan_logo.png";
+import ZvezdaLogo from "@/public/images/zvezda_logo.png";
+import PayCor from "@/public/images/paycor_banner.png";
+import Nlb from "@/public/images/nlb_banner.png";
+import Nis from "@/public/images/nis_banner.png";
+import Mercator from "@/public/images/mercator_banner.png";
+import Mozzart from "@/public/images/mozzart_banner.png";
+import Carousel from "@/components/Carousel";
+
+const inter = Inter({ subsets: ["latin"] });
+
+const getFeed = async () => {
+  let parser = new Parser();
+
+  const data = await parser.parseURL("https://sportklub.rs/feed/");
+
+  return data;
+};
+
+export default async function Home() {
+  const feed = await getFeed();
+
+  const feedPartizanFiltered = feed?.items?.filter((item) =>
+    item.categories.some((category) =>
+      category.toLowerCase().includes("partizan")
+    )
+  );
+
+  const feedZvezdaFiltered = feed?.items?.filter((item) =>
+    item.categories.some((category) =>
+      category.toLowerCase().includes("zvezda")
+    )
+  );
+
+  const slides = [
+    {
+      imageSrc: PayCor,
+      imageAlt: "PayCor banner",
+      href: "https://www.paycor.com/",
+      name: "Paycor",
+    },
+    {
+      imageSrc: Nlb,
+      imageAlt: "Nlb banner",
+      href: "https://www.nlbkb.rs/",
+      name: "Nlb",
+    },
+    {
+      imageSrc: Nis,
+      imageAlt: "Nis banner",
+      href: "https://www.nis.rs/",
+      name: "Nis",
+    },
+    {
+      imageSrc: Mercator,
+      imageAlt: "Mercator banner",
+      href: "https://www.mercator.rs/",
+      name: "Mercator",
+    },
+    {
+      imageSrc: Mozzart,
+      imageAlt: "Mozzart banner",
+      href: "https://www.mozzartbet.com/",
+      name: "Mozzart",
+    },
+  ];
+
+  return (
+    <main className="w-full bg-grayBase bg-white grid place-items-center py-12 gap-8">
+      <div className="w-4/5">
+        <Carousel slides={slides} />
+      </div>
+      <div
+        className="h-full w-4/5 grid "
+        style={{ gridTemplateColumns: "2fr 1fr" }}
+      >
+        <Feed data={feed?.items || []} layout={"block"} limit={10} />
+
+        <div className="w-full h-full flex flex-col gap-8">
+          <FeedAside
+            data={feedPartizanFiltered}
+            bgColor={"#333"}
+            imageSrc={PartizanLogo}
+            imageAlt={"Partizan Grb"}
+          />
+          <FeedAside
+            data={feedZvezdaFiltered}
+            bgColor={"#e53935"}
+            imageSrc={ZvezdaLogo}
+            imageAlt={"Zvezda Grb"}
+          />
+        </div>
+      </div>
+    </main>
+  );
+}
