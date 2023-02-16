@@ -133,11 +133,11 @@ const AppHeader = () => {
               type="button"
               aria-label="burger button"
               onClick={() => setExpanded(true)}
-              class="p-4 space-y-2 rounded "
+              className="p-4 space-y-2 rounded "
             >
-              <span class="block w-8 h-0.5 bg-secondary "></span>
-              <span class="block w-8 h-0.5 bg-secondary "></span>
-              <span class="block w-8 h-0.5 bg-secondary "></span>
+              <span className="block w-8 h-0.5 bg-secondary "></span>
+              <span className="block w-8 h-0.5 bg-secondary "></span>
+              <span className="block w-8 h-0.5 bg-secondary "></span>
             </button>
 
             <div
