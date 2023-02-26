@@ -4,8 +4,8 @@ import Parser from "rss-parser";
 import PayCor from "@/public/images/paycor_banner.png";
 import Nlb from "@/public/images/nlb_banner.png";
 import Nis from "@/public/images/nis_banner.png";
-import Mercator from "@/public/images/mercator_banner.png";
-import Mozzart from "@/public/images/mozzart_banner.png";
+import CocaCola from "@/public/images/CocaCola_banner.png";
+import BurgerKing from "@/public/images/burgerking_banner.png";
 import Feed from "@/components/Feed";
 
 const getFeed = async () => {
@@ -39,16 +39,16 @@ const Kosarka = async () => {
       name: "Nis",
     },
     {
-      imageSrc: Mercator,
-      imageAlt: "Mercator banner",
-      href: "https://www.mercator.rs/",
-      name: "Mercator",
+      imageSrc: CocaCola,
+      imageAlt: "Coca-Cola banner",
+      href: "https://www.coca-cola.rs/",
+      name: "Coca-cola",
     },
     {
-      imageSrc: Mozzart,
-      imageAlt: "Mozzart banner",
-      href: "https://www.mozzartbet.com/",
-      name: "Mozzart",
+      imageSrc: BurgerKing,
+      imageAlt: "Burger King banner",
+      href: "https://www.bk.com/",
+      name: "Burger King",
     },
   ];
 
