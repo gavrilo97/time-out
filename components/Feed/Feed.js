@@ -82,7 +82,7 @@ const Feed = (props) => {
                     passHref={true}
                     target={"_blank"}
                   >
-                    Prikaži vise
+                    Prikaži više
                   </Link>
                 </div>
               </div>
@@ -147,7 +147,7 @@ const Feed = (props) => {
                 passHref={true}
                 target={"_blank"}
               >
-                Prikaži vise
+                Prikaži više
               </Link>
             </div>
           </div>
@@ -161,7 +161,7 @@ const Feed = (props) => {
             className=" w-56 h-12 bg-blueBase text-secondary uppercase font-medium text-base "
             onClick={() => setExpanded((prev) => !prev)}
           >
-            {expanded ? "Prikaži manje" : "Prikaži vise"}
+            {expanded ? "Prikaži manje" : "Prikaži više"}
           </button>
         </div>
       )}
