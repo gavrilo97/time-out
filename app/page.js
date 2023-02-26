@@ -8,7 +8,7 @@ import PayCor from "@/public/images/paycor_banner.png";
 import Nlb from "@/public/images/nlb_banner.png";
 import Nis from "@/public/images/nis_banner.png";
 import CocaCola from "@/public/images/CocaCola_banner.png";
-import BurgerKing from "@/public/images/burgerking_banner.png";
+import Heineken from "@/public/images/heineken_banner.png";
 import Carousel from "@/components/Carousel";
 import s from "./page.module.css";
 
@@ -63,10 +63,10 @@ export default async function Home() {
       name: "Coca-cola",
     },
     {
-      imageSrc: BurgerKing,
-      imageAlt: "Burger King banner",
-      href: "https://www.bk.com/",
-      name: "Burger King",
+      imageSrc: Heineken,
+      imageAlt: "Heineken banner",
+      href: "https://www.heineken.com/rs/sr/home",
+      name: "Heineken",
     },
   ];
 
