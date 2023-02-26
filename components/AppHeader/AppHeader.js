@@ -51,11 +51,11 @@ const AppHeader = () => {
 
   const links = [
     {
-      name: "Pocetna",
+      name: "Početna",
       href: "/",
     },
     {
-      name: "Kosarka",
+      name: "Košarka",
       href: "/kosarka",
     },
     {
