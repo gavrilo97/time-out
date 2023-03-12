@@ -10,11 +10,13 @@ import Image from "next/image";
 export default function RootLayout({ children }) {
   const [visible, setVisible] = React.useState(false);
 
-  if (window) {
-    window.addEventListener("scroll", () =>
-      window.scrollY >= 500 ? setVisible(true) : setVisible(false)
-    );
-  }
+  React.useEffect(() => {
+    if (window) {
+      window.addEventListener("scroll", () =>
+        window.scrollY >= 500 ? setVisible(true) : setVisible(false)
+      );
+    }
+  }, []);
 
   const handleToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
