@@ -5,8 +5,41 @@
     transition: width 250ms ease;
 }
 
+.linkItem{
+    display: inline-block;
+    position: relative;
+}
+
+.linkItem a:hover {
+    color: #f2e394;
+}
+
+.linkItem a::before{
+    content: '';
+    display: block;
+    height: 5px;
+    
+    background-color: #f2e394;
+
+    position: absolute;
+    bottom: 50px;
+    width: 0%;
+
+    transition: all ease-in-out 200ms;
+}
+
+.linkItem a:hover::before{
+    width: 100%;
+}
+
 @media(max-width: 960px) {
         .headerContainer{
             grid-template-columns: 2fr 3fr;
         }
+}
+
+@media(max-width: 600px) {
+    .headerContainer{
+        grid-template-columns: 1fr 1fr;
+    }
 }

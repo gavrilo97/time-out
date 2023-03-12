@@ -14,14 +14,14 @@ const Feed = (props) => {
     const date = value.split("T")[0];
     const time = value.split("T")[1];
 
-    const formatted = `${date.replaceAll("-", ".")} ${time.substring(0, 8)}`;
+    const formatted = `${date.replaceAll("-", ".")} ${time.substring(0, 5)}`;
 
     return formatted;
   };
 
   return (
     <div
-      className={`w-11/12 md:w-full flex flex-row flex-wrap items-start ${
+      className={`w-full flex flex-row flex-wrap items-start ${
         layout === "block" ? "gap-4" : "gap-8"
       }`}
     >
@@ -35,6 +35,7 @@ const Feed = (props) => {
                 className={clsx(`bg-secondary rounded-lg grid `, {
                   [s.feedBlock]: layout === "block",
                   [s.feedNormal]: layout !== "block",
+                  [s.feedBlockFull]: layout === "block" && data.length === 1,
                 })}
               >
                 <div className="relative block w-full h-full">
@@ -48,10 +49,10 @@ const Feed = (props) => {
                   />
                 </div>
 
-                <div className="w-full h-full flex flex-col items-start justify-between p-2">
+                <div className="w-full h-full flex flex-col items-start justify-between p-2 gap-2">
                   <div className="w-full h-full flex flex-col items-start gap-4 text-ellipsis overflow-hidden">
                     <div className="flex flex-col w-full gap-1">
-                      <p className="text-lg font-medium uppercase text-primary">
+                      <p className="text-base font-medium uppercase text-primary">
                         {item.title}
                       </p>
                       <p className="text-sm font-medium uppercase text-grayDark">
@@ -60,7 +61,9 @@ const Feed = (props) => {
                     </div>
 
                     <p
-                      className="text-base text-primary font-light whitespace-pre-wrap"
+                      className={`${
+                        layout === "block" ? "text-base" : "text-sm"
+                      } text-primary font-light whitespace-pre-wrap`}
                       style={{
                         maxHeight: "70px",
                         overflow: "hidden",
@@ -74,7 +77,9 @@ const Feed = (props) => {
                     </p>
                   </div>
                   <Link
-                    className={`w-48 h-8 text-secondary  bg-blueBase self-end text-center`}
+                    className={`py-1 text-secondary bg-blueBase self-end text-center ${
+                      layout === "block" ? "text-base w-48" : "text-sm w-24"
+                    }`}
                     href={item.link || "#"}
                     passHref={true}
                     target={"_blank"}

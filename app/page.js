@@ -76,7 +76,7 @@ export default async function Home() {
         <Carousel slides={slides} />
       </div>
       <div
-        className={`w-full md:w-4/5 grid ${s.feedContainer} gap-8 md:gap-0 max-sm:items-center`}
+        className={`w-11/12 md:w-4/5 grid ${s.feedContainer} gap-8 md:gap-0 place-items-center sm:place-items-start`}
       >
         <Feed data={feed?.items || []} layout={"block"} limit={10} />
 

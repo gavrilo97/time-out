@@ -9,9 +9,13 @@ import InstagramIcon from "../../public/icons/instagram_icon_white.webp";
 import CloseIcon from "../../public/icons/close_icon.png";
 import Image from "next/image";
 import s from "./AppHeader.module.css";
+import Navigation from "../../public/navigation.json";
+import { usePathname } from "next/navigation";
 
 const AppHeader = () => {
   const [expanded, setExpanded] = React.useState(false);
+
+  const pathname = usePathname();
 
   const socials = [
     {
@@ -49,29 +53,6 @@ const AppHeader = () => {
     },
   ];
 
-  const links = [
-    {
-      name: "Početna",
-      href: "/",
-    },
-    {
-      name: "Košarka",
-      href: "/kosarka",
-    },
-    {
-      name: "Fudbal",
-      href: "/fudbal",
-    },
-    {
-      name: "Tenis",
-      href: "/tenis",
-    },
-    {
-      name: "Ostalo",
-      href: "/ostalo",
-    },
-  ];
-
   React.useEffect(() => {
     if (document) {
       if (expanded) document.body.classList.add("overflow-hidden");
@@ -79,6 +60,10 @@ const AppHeader = () => {
         document.body.classList.remove("overflow-hidden");
     }
   }, [expanded]);
+
+  React.useEffect(() => {
+    setExpanded(false);
+  }, [pathname]);
 
   return (
     <header className="w-full h-48 flex flex-row justify-center items-start bg-blueBase ">
@@ -117,10 +102,10 @@ const AppHeader = () => {
 
           <nav className="hidden w-full h-full md:grid place-items-end">
             <ul className="flex flex-row w-full h-full items-center justify-end gap-8">
-              {links.map((link) => (
+              {Navigation.map((link) => (
                 <li
                   key={link.name}
-                  className="text-base font-medium text-secondary uppercase "
+                  className={`text-base font-medium text-secondary uppercase ${s.linkItem}`}
                 >
                   <Link href={link.href}>{link.name}</Link>
                 </li>
@@ -173,7 +158,7 @@ const AppHeader = () => {
                       </h1>
                       <nav className=" w-full h-full grid place-items-start">
                         <ul className="flex flex-col w-full h-full items-start gap-8">
-                          {links.map((link) => (
+                          {Navigation.map((link) => (
                             <li
                               key={link.name}
                               className="text-base font-medium text-secondary uppercase "

@@ -7,6 +7,7 @@ import Nis from "@/public/images/nis_banner.png";
 import CocaCola from "@/public/images/CocaCola_banner.png";
 import Heineken from "@/public/images/heineken_banner.png";
 import Feed from "@/components/Feed";
+import Image from "next/image";
 
 const getFeed = async () => {
   let parser = new Parser();
@@ -60,16 +61,31 @@ const Kosarka = async () => {
   );
 
   const featuredItem = [feedKosarka.shift()];
+
   return (
     <main className="w-full bg-grayBase bg-white grid place-items-center py-12 gap-8">
-      <div className="w-4/5">
+      <div className="w-11/12 sm:w-4/5">
         <Carousel slides={slides} />
       </div>
-      <div className="w-4/5">
+
+      <div
+        className="w-11/12 sm:w-4/5 grid gap-8"
+        style={{ gridTemplateColumns: "1fr 1fr" }}
+      >
         <Feed data={featuredItem} showMoreButton={false} layout="block" />
+        <div className="bg-redBase w-full h-full grid place-items-center">
+          <div className="relative w-4/5 h-4/5 block">
+            <Image
+              src={Heineken}
+              alt="Promeni ovaj alt"
+              fill
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="w-4/5">
+      <div className="w-11/12 flex justify-center sm:w-4/5">
         <Feed data={feedKosarka} />
       </div>
       <div />

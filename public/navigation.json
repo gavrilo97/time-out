@@ -1,0 +1,22 @@
+[
+    {
+      "name": "Početna",
+      "href": "/"
+    },
+    {
+      "name": "Košarka",
+      "href": "/kosarka"
+    },
+    {
+      "name": "Fudbal",
+      "href": "/fudbal"
+    },
+    {
+      "name": "Tenis",
+      "href": "/tenis"
+    },
+    {
+      "name": "Ostalo",
+      "href": "/ostalo"
+    }
+  ]
