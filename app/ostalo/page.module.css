@@ -1,0 +1,8 @@
+.layout {
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 600px){
+ .layout{   grid-template-columns: none;
+    grid-template-rows: 1fr 1fr;}
+}
