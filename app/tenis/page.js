@@ -72,7 +72,6 @@ const Tenis = async () => {
       <div className="w-4/5">
         <Feed data={feedtenis} />
       </div>
-      <div />
     </main>
   );
 };

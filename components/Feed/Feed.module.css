@@ -1,0 +1,18 @@
+.feedBlock {
+    width: 45%;
+    min-height: 500px;
+    grid-template-columns: none;
+    grid-template-rows: 1fr 1fr;
+}
+.feedNormal {
+    width: 100%;
+    min-height: 172px;
+    grid-template-columns: 2fr 4fr;
+    grid-template-rows: none;
+}
+
+@media (max-width: 600px){
+    .feedBlock{
+        width: 100%;
+    }
+}

@@ -3,6 +3,8 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import s from "./Feed.module.css";
+import clsx from "clsx";
 
 const Feed = (props) => {
   const { data, showMoreButton = true, layout = "card", limit = 8 } = props;
@@ -19,7 +21,7 @@ const Feed = (props) => {
 
   return (
     <div
-      className={` w-full flex flex-row flex-wrap max-md:place-content-center  items-start ${
+      className={`w-11/12 md:w-full flex flex-row flex-wrap items-start ${
         layout === "block" ? "gap-4" : "gap-8"
       }`}
     >
@@ -30,15 +32,10 @@ const Feed = (props) => {
             {idx < limit && (
               <div
                 key={idx}
-                className={`bg-secondary  ${
-                  layout === "block" ? "w-1/2 md:w-2/5" : "w-full"
-                } rounded-lg grid `}
-                style={{
-                  gridTemplateColumns: layout === "block" ? "none" : "2fr 4fr",
-                  minHeight: layout === "block" ? 500 : 172,
-                  gridTemplateRows: layout !== "block" ? "none" : "1fr 1fr",
-                  width: layout === "block" ? "45%" : "100%",
-                }}
+                className={clsx(`bg-secondary rounded-lg grid `, {
+                  [s.feedBlock]: layout === "block",
+                  [s.feedNormal]: layout !== "block",
+                })}
               >
                 <div className="relative block w-full h-full">
                   <Image
@@ -95,15 +92,10 @@ const Feed = (props) => {
         data.map((item, idx) => (
           <div
             key={idx}
-            className={`bg-secondary  ${
-              layout === "block" ? "w-1/2 md:w-2/5" : "w-full"
-            } rounded-lg grid `}
-            style={{
-              gridTemplateColumns: layout === "block" ? "none" : "2fr 4fr",
-              minHeight: layout === "block" ? 450 : 172,
-              gridTemplateRows: layout !== "block" ? "none" : "1fr 1fr",
-              width: layout === "block" ? "45%" : "100%",
-            }}
+            className={clsx(`bg-secondary rounded-lg grid `, {
+              [s.feedBlock]: layout === "block",
+              [s.feedNormal]: layout !== "block",
+            })}
           >
             <div className="relative block w-full h-full">
               <Image
@@ -154,11 +146,11 @@ const Feed = (props) => {
         ))}
 
       {showMoreButton && (
-        <div className="w-full  flex flex-row justify-center">
+        <div className="w-full flex flex-row justify-center">
           <button
             type="button"
             aria-label="expand/collapse"
-            className=" w-56 h-12 bg-blueBase text-secondary uppercase font-medium text-base "
+            className="w-full sm:w-56 h-12 bg-blueBase text-secondary uppercase font-medium text-base "
             onClick={() => setExpanded((prev) => !prev)}
           >
             {expanded ? "Prikaži manje" : "Prikaži više"}
