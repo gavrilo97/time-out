@@ -18,10 +18,17 @@
     .feedBlock{
         width: 48%;
     }
+    .feedBlockFull{
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px){
     .feedBlock{
         width: 100%;
+    }
+    .feedBlockFull{
+        width: 100%;
+       
     }
 }

@@ -8,6 +8,7 @@ import CocaCola from "@/public/images/CocaCola_banner.png";
 import Heineken from "@/public/images/heineken_banner.png";
 import Feed from "@/components/Feed";
 import Image from "next/image";
+import s from "./page.module.css";
 
 const getFeed = async () => {
   let parser = new Parser();
@@ -66,10 +67,8 @@ const Fudbal = async () => {
       <div className="w-4/5">
         <Carousel slides={slides} />
       </div>
-      <div
-        className="w-11/12 sm:w-4/5 grid gap-8"
-        style={{ gridTemplateColumns: "1fr 1fr" }}
-      >
+
+      <div className={`w-11/12 sm:w-4/5 grid gap-8 ${s.layout}`}>
         <Feed data={featuredItem} showMoreButton={false} layout="block" />
         <div className="bg-redBase w-full h-full grid place-items-center">
           <div className="relative w-4/5 h-4/5 block">
