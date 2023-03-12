@@ -34,8 +34,8 @@ const AppFooter = () => {
               <Image
                 src={FacebookIcon}
                 alt={"facebook icon"}
-                width={18}
-                height={18}
+                width={24}
+                height={24}
                 style={{ objectFit: "contain" }}
               />
             </Link>
@@ -47,8 +47,8 @@ const AppFooter = () => {
               <Image
                 src={InstagramIcon}
                 alt={"facebook icon"}
-                width={18}
-                height={18}
+                width={24}
+                height={24}
                 style={{ objectFit: "contain" }}
               />
             </Link>
@@ -60,8 +60,8 @@ const AppFooter = () => {
               <Image
                 src={YoutubeIcon}
                 alt={"facebook icon"}
-                width={24}
-                height={20}
+                width={28}
+                height={23}
                 style={{ objectFit: "cover" }}
               />
             </Link>
