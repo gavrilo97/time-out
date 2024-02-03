@@ -5,7 +5,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["sportklub.rs"],
+    domains: ["sportklub.rs", "sportklub.n1info.rs"],
   },
   output: "standalone",
 };
