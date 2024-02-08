@@ -92,7 +92,7 @@ const AppFooter = () => {
         <div className="w-full h-px bg-secondary" />
 
         <p className="w-full text-base text-secondary font-normal text-start">
-          &copy;2023 Copyright TimeOut
+          &copy;2024 Copyright TimeOut
         </p>
       </div>
     </div>
