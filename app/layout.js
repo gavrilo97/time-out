@@ -1,9 +1,9 @@
-import "./globals.css";
-import { Barlow_Condensed, Manrope } from "next/font/google";
-import AppHeader from "@/components/AppHeader";
-import AppFooter from "@/components/AppFooter";
-import ScrollToTop from "@/components/ScrollToTop";
-import { SITE_NAME, SITE_URL, OG_IMAGE } from "@/lib/metadata";
+import "./globals.css"
+import { Barlow_Condensed, Manrope } from "next/font/google"
+import AppHeader from "@/components/AppHeader"
+import AppFooter from "@/components/AppFooter"
+import ScrollToTop from "@/components/ScrollToTop"
+import { SITE_NAME, SITE_URL, OG_IMAGE } from "@/lib/metadata"
 
 // latin-ext je obavezan za srpska slova (š, đ, č, ć, ž)
 const display = Barlow_Condensed({
@@ -11,13 +11,13 @@ const display = Barlow_Condensed({
   weight: ["600", "700"],
   variable: "--font-display",
   display: "swap",
-});
+})
 
 const body = Manrope({
   subsets: ["latin", "latin-ext"],
   variable: "--font-body",
   display: "swap",
-});
+})
 
 export const metadata = {
   title: {
@@ -53,7 +53,7 @@ export const metadata = {
     description: "Najnovije sportske vesti, analize i ekskluzivne priče.",
     images: [OG_IMAGE.url],
   },
-};
+}
 
 // od Next-a 14 themeColor i viewport idu u poseban viewport export
 export const viewport = {
@@ -61,11 +61,15 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-};
+}
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="sr" className={`${display.variable} ${body.variable}`}>
+    <html
+      lang="sr"
+      className={`${display.variable} ${body.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <head />
       <body className="min-h-screen flex flex-col bg-paper">
         <a
@@ -84,5 +88,5 @@ export default function RootLayout({ children }) {
         <ScrollToTop />
       </body>
     </html>
-  );
+  )
 }
