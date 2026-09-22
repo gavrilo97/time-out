@@ -10,10 +10,11 @@ import s from "./page.module.css";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata = buildMetadata({
-  title: "Najnovije vesti",
+  title: "TimeOut — Sportske vesti",
   description:
     "Najnovije sportske vesti, analize i ekskluzivne priče iz sveta fudbala, košarke, tenisa i ostalih sportova.",
   path: "/",
+  absolute: true,
 });
 
 export default async function Home() {

@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Barlow_Condensed, Manrope } from "@next/font/google";
+import { Barlow_Condensed, Manrope } from "next/font/google";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -27,8 +27,9 @@ export const metadata = {
   description:
     "TimeOut — najnovije sportske vesti, analize i ekskluzivne priče iz sveta fudbala, košarke, tenisa i ostalih sportova.",
   applicationName: SITE_NAME,
-  themeColor: "#001e28",
+  metadataBase: new URL(SITE_URL),
   manifest: "/site.webmanifest",
+  alternates: { canonical: "/" },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -54,13 +55,18 @@ export const metadata = {
   },
 };
 
+// od Next-a 14 themeColor i viewport idu u poseban viewport export
+export const viewport = {
+  themeColor: "#001e28",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="sr" className={`${display.variable} ${body.variable}`}>
-      {/* manifest se u Next-u 13.1 ne generiše iz metadata objekta, pa ide ručno */}
-      <head>
-        <link rel="manifest" href="/site.webmanifest" />
-      </head>
+      <head />
       <body className="min-h-screen flex flex-col bg-paper">
         <a
           href="#sadrzaj"

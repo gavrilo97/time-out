@@ -9,22 +9,18 @@ import Logo from "@/public/images/logoSajt1-volt.png";
 import Navigation from "@/public/navigation.json";
 import s from "./AppHeader.module.css";
 
+// datum postoji samo na klijentu: server ga ne zna, pa vraća prazan string
+const subscribeToNothing = () => () => {};
+const readToday = () =>
+  new Date().toLocaleDateString("sr-RS", { day: "numeric", month: "long", year: "numeric" });
+const readTodayOnServer = () => "";
+
 const AppHeader = () => {
   const [expanded, setExpanded] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
-  const [today, setToday] = React.useState("");
   const pathname = usePathname();
 
-  // datum se računa tek posle montiranja da se izbegne neslaganje pri hidrataciji
-  React.useEffect(() => {
-    setToday(
-      new Date().toLocaleDateString("sr-RS", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-    );
-  }, []);
+  const today = React.useSyncExternalStore(subscribeToNothing, readToday, readTodayOnServer);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -37,10 +33,6 @@ const AppHeader = () => {
     document.body.classList.toggle("overflow-hidden", expanded);
     return () => document.body.classList.remove("overflow-hidden");
   }, [expanded]);
-
-  React.useEffect(() => {
-    setExpanded(false);
-  }, [pathname]);
 
   const isActive = (href) =>
     href === "/" ? pathname === "/" : Boolean(pathname?.startsWith(href));
@@ -152,6 +144,7 @@ const AppHeader = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
+                    onClick={() => setExpanded(false)}
                     className={`display block border-b border-white/10 py-3 text-3xl transition-colors duration-200 ${
                       isActive(link.href) ? "text-volt" : "text-secondary hover:text-volt"
                     }`}
