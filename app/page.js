@@ -1,100 +1,54 @@
-import { Inter } from "@next/font/google";
-import Parser from "rss-parser";
 import Feed from "@/components/Feed";
 import FeedAside from "@/components/FeedAside";
+import Carousel from "@/components/Carousel";
+import SectionHeading from "@/components/SectionHeading";
 import PartizanLogo from "@/public/images/partizan_logo.png";
 import ZvezdaLogo from "@/public/images/zvezda_logo.png";
-import PayCor from "@/public/images/paycor_banner.png";
-import Nlb from "@/public/images/nlb_banner.png";
-import Nis from "@/public/images/nis_banner.png";
-import CocaCola from "@/public/images/CocaCola_banner.png";
-import Heineken from "@/public/images/heineken_banner.png";
-import Carousel from "@/components/Carousel";
+import { getFeed, byCategory } from "@/lib/feed";
+import { slides } from "@/lib/ads";
 import s from "./page.module.css";
+import { buildMetadata } from "@/lib/metadata";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const getFeed = async () => {
-  let parser = new Parser();
-
-  const data = await parser.parseURL("https://sportklub.rs/feed/");
-
-  return data;
-};
+export const metadata = buildMetadata({
+  title: "Najnovije vesti",
+  description:
+    "Najnovije sportske vesti, analize i ekskluzivne priče iz sveta fudbala, košarke, tenisa i ostalih sportova.",
+  path: "/",
+});
 
 export default async function Home() {
-  const feed = await getFeed();
-
-  const feedPartizanFiltered = feed?.items?.filter((item) =>
-    item.categories.some((category) =>
-      category.toLowerCase().includes("partizan")
-    )
-  );
-
-  const feedZvezdaFiltered = feed?.items?.filter((item) =>
-    item.categories.some((category) =>
-      category.toLowerCase().includes("zvezda")
-    )
-  );
-
-  const slides = [
-    {
-      imageSrc: PayCor,
-      imageAlt: "PayCor banner",
-      href: "https://www.paycor.com/",
-      name: "Paycor",
-    },
-    {
-      imageSrc: Nlb,
-      imageAlt: "Nlb banner",
-      href: "https://www.nlbkb.rs/",
-      name: "Nlb",
-    },
-    {
-      imageSrc: Nis,
-      imageAlt: "Nis banner",
-      href: "https://www.nis.rs/",
-      name: "Nis",
-    },
-    {
-      imageSrc: CocaCola,
-      imageAlt: "Coca-Cola banner",
-      href: "https://www.coca-cola.rs/",
-      name: "Coca-cola",
-    },
-    {
-      imageSrc: Heineken,
-      imageAlt: "Heineken banner",
-      href: "https://www.heineken.com/rs/sr/home",
-      name: "Heineken",
-    },
-  ];
+  const items = await getFeed();
 
   return (
-    <main className="w-full bg-grayBase bg-white grid place-items-center py-12 gap-8">
-      <div className="w-11/12 md:w-4/5">
+    <main className="w-full bg-paper pb-20">
+      <section className="shell pt-8">
         <Carousel slides={slides} />
-      </div>
-      <div
-        className={`w-11/12 md:w-4/5 grid ${s.feedContainer} gap-8 md:gap-0 place-items-center sm:place-items-start`}
-      >
-        <Feed data={feed?.items || []} layout={"block"} limit={10} />
+      </section>
 
-        <div className="w-11/12 md:w-full max-md:place-self-center flex flex-col gap-8">
-          <FeedAside
-            data={feedPartizanFiltered}
-            bgColor={"#333"}
-            imageSrc={PartizanLogo}
-            imageAlt={"Partizan Grb"}
-          />
-          <FeedAside
-            data={feedZvezdaFiltered}
-            bgColor={"#e53935"}
-            imageSrc={ZvezdaLogo}
-            imageAlt={"Zvezda Grb"}
-          />
+      <section className="shell pt-14">
+        <SectionHeading title="Najnovije vesti" kicker="Uživo iz sveta sporta" as="h1" />
+
+        <div className={`mt-8 grid gap-10 ${s.feedContainer}`}>
+          <Feed data={items} layout="block" limit={10} />
+
+          <aside className={`flex flex-col gap-6 ${s.aside}`}>
+            <FeedAside
+              data={byCategory(items, "partizan")}
+              title="Partizan"
+              bgColor="#1c1c1e"
+              imageSrc={PartizanLogo}
+              imageAlt="Grb Partizana"
+            />
+            <FeedAside
+              data={byCategory(items, "zvezda")}
+              title="Crvena zvezda"
+              bgColor="#c62828"
+              imageSrc={ZvezdaLogo}
+              imageAlt="Grb Crvene zvezde"
+            />
+          </aside>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

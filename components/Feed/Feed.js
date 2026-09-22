@@ -1,167 +1,58 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
-import Link from "next/link";
+import FeedCard from "./FeedCard";
 import s from "./Feed.module.css";
-import clsx from "clsx";
 
-const Feed = (props) => {
-  const { data, showMoreButton = true, layout = "card", limit = 8 } = props;
+const Feed = ({ data, showMoreButton = true, layout = "card", limit = 8 }) => {
   const [expanded, setExpanded] = React.useState(false);
 
-  const formatDate = (value) => {
-    const date = value.split("T")[0];
-    const time = value.split("T")[1];
+  const items = Array.isArray(data) ? data : [];
+  const block = layout === "block";
 
-    const formatted = `${date.replaceAll("-", ".")} ${time.substring(0, 5)}`;
-
-    return formatted;
-  };
+  if (items.length === 0) {
+    return (
+      <div className="w-full rounded-card border border-dashed border-grayBase bg-secondary p-10 text-center">
+        <p className="kicker text-grayDark">Trenutno nema vesti</p>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={`w-full flex flex-row flex-wrap items-start ${
-        layout === "block" ? "gap-4" : "gap-8"
-      }`}
-    >
-      {!expanded &&
-        data.length > 0 &&
-        data.map((item, idx) => (
-          <>
-            {idx < limit && (
-              <div
-                key={idx}
-                className={clsx(`bg-secondary rounded-lg grid `, {
-                  [s.feedBlock]: layout === "block",
-                  [s.feedNormal]: layout !== "block",
-                  [s.feedBlockFull]: layout === "block" && data.length === 1,
-                })}
-              >
-                <div className="relative block w-full h-full">
-                  <Image
-                    src={item["content:encoded"].match(/src="(.*?)"/)[1]}
-                    alt={"image alt"}
-                    fill
-                    className={`object-cover ${
-                      layout === "block" ? " rounded-t-lg " : "rounded-l-lg"
-                    }`}
-                  />
-                </div>
-
-                <div className="w-full h-full flex flex-col items-start justify-between p-2 gap-2">
-                  <div className="w-full h-full flex flex-col items-start gap-4 text-ellipsis overflow-hidden">
-                    <div className="flex flex-col w-full gap-1">
-                      <p className="text-base font-medium uppercase text-primary">
-                        {item.title}
-                      </p>
-                      <p className="text-sm font-medium uppercase text-grayDark">
-                        {formatDate(item.isoDate)}
-                      </p>
-                    </div>
-
-                    <p
-                      className={`${
-                        layout === "block" ? "text-base" : "text-sm"
-                      } text-primary font-light whitespace-pre-wrap`}
-                      style={{
-                        maxHeight: "70px",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        "-webkit-box-orient": "vertical",
-                        "-webkit-line-clamp": "3",
-                      }}
-                    >
-                      {item.content}
-                    </p>
-                  </div>
-                  <Link
-                    className={`py-1 text-secondary bg-blueBase self-end text-center ${
-                      layout === "block" ? "text-base w-48" : "text-sm w-24"
-                    }`}
-                    href={item.link || "#"}
-                    passHref={true}
-                    target={"_blank"}
-                  >
-                    Prikaži više
-                  </Link>
-                </div>
-              </div>
-            )}
-          </>
+    <div className="flex w-full flex-col gap-8">
+      <div className={`${s.stagger} w-full ${block ? s.gridBlock : s.gridRow}`}>
+        {(expanded ? items : items.slice(0, limit)).map((item) => (
+          <FeedCard key={item.id} item={item} block={block} />
         ))}
+      </div>
 
-      {expanded &&
-        data.length > 0 &&
-        data.map((item, idx) => (
-          <div
-            key={idx}
-            className={clsx(`bg-secondary rounded-lg grid `, {
-              [s.feedBlock]: layout === "block",
-              [s.feedNormal]: layout !== "block",
-            })}
-          >
-            <div className="relative block w-full h-full">
-              <Image
-                src={item["content:encoded"].match(/src="(.*?)"/)[1]}
-                alt={"image alt"}
-                fill
-                className={`object-cover ${
-                  layout === "block" ? " rounded-t-lg " : "rounded-l-lg"
-                }`}
-              />
-            </div>
-
-            <div className="w-full h-full flex flex-col items-start justify-between p-2">
-              <div className="w-full h-full flex flex-col items-start gap-4 text-ellipsis overflow-hidden">
-                <div className="flex flex-col w-full gap-1">
-                  <p className="text-lg font-medium uppercase text-primary">
-                    {item.title}
-                  </p>
-                  <p className="text-sm font-medium uppercase text-grayDark">
-                    {formatDate(item.isoDate)}
-                  </p>
-                </div>
-
-                <p
-                  className="text-base text-primary font-light whitespace-pre-wrap"
-                  style={{
-                    maxHeight: "70px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
-                    "-webkit-box-orient": "vertical",
-                    "-webkit-line-clamp": "3",
-                  }}
-                >
-                  {item.content}
-                </p>
-              </div>
-              <Link
-                className={`w-48 h-8 text-secondary  bg-blueBase self-end text-center`}
-                href={item.link || "#"}
-                passHref={true}
-                target={"_blank"}
-              >
-                Prikaži više
-              </Link>
-            </div>
-          </div>
-        ))}
-
-      {showMoreButton && (
-        <div className="w-full flex flex-row justify-center">
+      {showMoreButton && items.length > limit ? (
+        <div className="flex w-full justify-center">
           <button
             type="button"
-            aria-label="expand/collapse"
-            className="w-full sm:w-56 h-12 bg-blueBase text-secondary uppercase font-medium text-base "
             onClick={() => setExpanded((prev) => !prev)}
+            className="inline-flex h-12 items-center gap-2.5 rounded-full bg-navy-800 px-8
+                       display text-sm tracking-wider2 text-secondary
+                       transition-all duration-300 ease-out hover:bg-volt hover:text-ink"
           >
-            {expanded ? "Prikaži manje" : "Prikaži više"}
+            {expanded ? "Prikaži manje" : "Prikaži još vesti"}
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

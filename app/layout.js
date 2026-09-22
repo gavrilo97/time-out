@@ -1,50 +1,81 @@
-"use client";
-
 import "./globals.css";
-import * as React from "react";
+import { Barlow_Condensed, Manrope } from "@next/font/google";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
-import ArrowUp from "../public/icons/arrow_up_icon.png";
-import Image from "next/image";
+import ScrollToTop from "@/components/ScrollToTop";
+import { SITE_NAME, SITE_URL, OG_IMAGE } from "@/lib/metadata";
+
+// latin-ext je obavezan za srpska slova (š, đ, č, ć, ž)
+const display = Barlow_Condensed({
+  subsets: ["latin", "latin-ext"],
+  weight: ["600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const body = Manrope({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+export const metadata = {
+  title: {
+    default: "TimeOut — Sportske vesti",
+    template: `%s · ${SITE_NAME}`,
+  },
+  description:
+    "TimeOut — najnovije sportske vesti, analize i ekskluzivne priče iz sveta fudbala, košarke, tenisa i ostalih sportova.",
+  applicationName: SITE_NAME,
+  themeColor: "#001e28",
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  openGraph: {
+    title: "TimeOut — Sportske vesti",
+    description: "Najnovije sportske vesti, analize i ekskluzivne priče.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "sr_RS",
+    type: "website",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TimeOut — Sportske vesti",
+    description: "Najnovije sportske vesti, analize i ekskluzivne priče.",
+    images: [OG_IMAGE.url],
+  },
+};
 
 export default function RootLayout({ children }) {
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    if (window) {
-      window.addEventListener("scroll", () =>
-        window.scrollY >= 500 ? setVisible(true) : setVisible(false)
-      );
-    }
-  }, []);
-
-  const handleToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <html lang="en">
-      <head />
-      <body>
-        {visible && (
-          <button
-            type="button"
-            aria-label="scroll to top"
-            onClick={() => handleToTop()}
-            className="w-12 h-12 rounded-lg bg-blueBase border-2 border-secondary fixed right-8 bottom-8 grid place-items-center z-50"
-          >
-            <Image
-              src={ArrowUp}
-              alt="arrow up"
-              width={24}
-              height={24}
-              style={{ objectFit: "contain" }}
-            />
-          </button>
-        )}
+    <html lang="sr" className={`${display.variable} ${body.variable}`}>
+      {/* manifest se u Next-u 13.1 ne generiše iz metadata objekta, pa ide ručno */}
+      <head>
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
+      <body className="min-h-screen flex flex-col bg-paper">
+        <a
+          href="#sadrzaj"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60]
+                     focus:bg-volt focus:text-ink focus:px-4 focus:py-2 focus:rounded-full focus:font-semibold"
+        >
+          Preskoči na sadržaj
+        </a>
+
         <AppHeader />
-        {children}
+        <div id="sadrzaj" className="flex-1">
+          {children}
+        </div>
         <AppFooter />
+        <ScrollToTop />
       </body>
     </html>
   );

@@ -1,12 +1,19 @@
-.feedContainer{
-    grid-template-columns: 2fr 1fr;
+.feedContainer {
+  grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+  align-items: start;
 }
 
-@media (max-width: 960px){
-    .feedContainer{
-        grid-template-columns: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.aside {
+  position: sticky;
+  top: 6.5rem;
+}
+
+@media (max-width: 960px) {
+  .feedContainer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .aside {
+    position: static;
+  }
 }

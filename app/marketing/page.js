@@ -1,54 +1,84 @@
-import * as React from "react";
+import SectionHeading from "@/components/SectionHeading";
+import { CONTACT } from "@/lib/contact";
+import { buildMetadata } from "@/lib/metadata";
 
-const Marketing = () => {
-  return (
-    <div className="w-full flex justify-center">
-      <div className="w-11/12 md:w-4/5">
-        <h1 className="uppercase font-bold py-8 text-lg">Marketing</h1>
+export const metadata = buildMetadata({
+  title: "Marketing",
+  description: "Oglašavanje na TimeOut portalu — dosegnite aktivnu publiku ljubitelja sporta.",
+  path: "/marketing",
+});
 
-        <div className="flex flex-col gap-8">
-          <p>Zašto oglašavati sa nama?</p>
+const REASONS = [
+  {
+    n: "01",
+    heading: "Velika poseta",
+    body: "Naša stranica beleži impresivan broj poseta svakog dana, pružajući vam priliku da dosegnete veliki broj ljubitelja sporta.",
+  },
+  {
+    n: "02",
+    heading: "Ciljana publika",
+    body: "Fokusiramo se na sportske vesti i teme, privlačeći aktivnu publiku koja je angažovana i zainteresovana za sportske proizvode i usluge.",
+  },
+  {
+    n: "03",
+    heading: "Diversifikovani kanali",
+    body: "Osim naše veb stranice, prisutni smo i na raznim društvenim mrežama i platformama, pružajući vam priliku za širok spektar oglašavanja.",
+  },
+];
 
+const Marketing = () => (
+  <main className="w-full bg-paper pb-20">
+    <section className="shell pt-12">
+      <SectionHeading title="Marketing" kicker="Oglašavanje" as="h1" />
+
+      <div className="prose mt-10 max-w-3xl">
+        <p className="lead">Zašto oglašavati sa nama?</p>
+      </div>
+
+      <div className="mt-10 grid gap-6 md:grid-cols-3">
+        {REASONS.map((reason) => (
+          <article
+            key={reason.n}
+            className="group rounded-card border border-grayBase bg-secondary p-7 shadow-card
+                       transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-cardHover"
+          >
+            <span className="display text-5xl leading-none text-volt-deep transition-colors duration-300 group-hover:text-volt">
+              {reason.n}
+            </span>
+            <h2 className="display mt-4 text-2xl text-primary">{reason.heading}</h2>
+            <p className="mt-3 text-[0.95rem] leading-relaxed text-grayDark">{reason.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-14 max-w-3xl">
+        <SectionHeading title="Kako se oglašavati" size="sm" rule={false} />
+        <div className="prose mt-3 flex flex-col gap-5">
           <p>
-            1. Velika Poseta: Naša stranica beleži impresivan broj poseta svakog
-            dana, pružajući vam priliku da dosegnete veliki broj ljubitelja
-            sporta.
-          </p>
-
-          <p>
-            2. Ciljana Publika: Fokusiramo se na sportske vesti i teme,
-            privlačeći aktivnu publiku koja je angažovana i zainteresovana za
-            sportske proizvode i usluge.
-          </p>
-
-          <p>
-            3. Diversifikovani Kanali: Osim naše veb stranice, prisutni smo i na
-            raznim društvenim mrežama i platformama, pružajući vam priliku za
-            širok spektar oglašavanja.
-          </p>
-
-          <p>Kako se oglašavati:</p>
-
-          <p>
-            Jednostavno kontaktirajte Time-Out Media putem e-mail adrese:
-            gavrilovic.stefan12@gmail.com. Naš tim će vam pružiti sve potrebne
-            informacije o dostupnim opcijama oglašavanja, kao i priliku za
-            prilagođavanje kampanje prema vašim specifičnim potrebama.
+            Jednostavno kontaktirajte Time-Out Media putem e-mail adrese:{" "}
+            <a
+              href={`mailto:${CONTACT.email}`}
+              className="font-medium text-navy-600 underline decoration-volt decoration-2 underline-offset-4"
+            >
+              {CONTACT.email}
+            </a>
+            . Naš tim će vam pružiti sve potrebne informacije o dostupnim opcijama oglašavanja, kao
+            i priliku za prilagođavanje kampanje prema vašim specifičnim potrebama.
           </p>
           <p>
-            Povežite se sa svojom ciljanom publikom putem našeg sportskog kanala
-            i osigurajte da vaš brend bude u središtu pažnje. Uspostavite
-            kontakt s nama danas i otkrijte kako možemo zajedno stvoriti
-            dinamičnu i uspešnu kampanju.
+            Povežite se sa svojom ciljanom publikom putem našeg sportskog kanala i osigurajte da vaš
+            brend bude u središtu pažnje. Uspostavite kontakt s nama danas i otkrijte kako možemo
+            zajedno stvoriti dinamičnu i uspešnu kampanju.
           </p>
-        </div>
-        <div className="flex flex-col pb-8 pt-8">
-          <p>Sportski pozdrav,</p>
-          <p>TimeOut tim</p>
         </div>
       </div>
-    </div>
-  );
-};
+
+      <div className="mt-12 max-w-3xl border-l-2 border-volt pl-6">
+        <p className="text-[0.95rem] text-grayDark">Sportski pozdrav,</p>
+        <p className="display text-2xl text-primary">TimeOut tim</p>
+      </div>
+    </section>
+  </main>
+);
 
 export default Marketing;

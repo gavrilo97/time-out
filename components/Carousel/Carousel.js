@@ -1,41 +1,44 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import s from "./Carousel.module.css";
 
-const Carousel = React.forwardRef(function Carousel(props, ref) {
-  const { slides, options } = props;
-  const [emblaRef] = useEmblaCarousel(options, [Autoplay()]);
+const Carousel = ({ slides }) => {
+  const [emblaRef] = useEmblaCarousel({ loop: true, align: "start" }, [
+    Autoplay({ delay: 5000, stopOnInteraction: false }),
+  ]);
+
+  if (!slides?.length) return null;
 
   return (
-    <div className={s.embla} ref={ref}>
-      <div className={s.embla__viewport} ref={emblaRef}>
-        <div className={s.embla__container}>
-          {slides.map((slide, index) => (
-            <div
-              className={`${s.embla__slide} relative block h-64 w-full`}
-              key={index}
+    <div className={s.viewport} ref={emblaRef}>
+      <div className={s.container}>
+        {slides.map((slide, index) => (
+          <div className={s.slide} key={slide.name}>
+            <Link
+              href={slide.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.slideLink}
+              aria-label={slide.name}
             >
-              <Link href={slide.href} passHref={true} target={"_blank"}>
-                <Image
-                  className={`${s.embla__slide__img} object-cover`}
-                  src={slide.imageSrc.src}
-                  alt={slide.imageAlt}
-                  fill
-                  priority={index === 0}
-                />
-              </Link>
-            </div>
-          ))}
-        </div>
+              <Image
+                src={slide.imageSrc}
+                alt={slide.imageAlt}
+                fill
+                priority={index === 0}
+                sizes="(max-width: 960px) 100vw, 1320px"
+                className="object-cover"
+              />
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
-});
+};
 
 export default Carousel;

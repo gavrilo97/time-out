@@ -1,102 +1,66 @@
-import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import FacebookIcon from "../../public/icons/facebook_icon_white.webp";
-import YoutubeIcon from "../../public/icons/youtube_white_icon.webp";
-import InstagramIcon from "../../public/icons/instagram_icon_white.webp";
-import Navigation from "../../public/navigation.json";
+import SocialLink, { SOCIALS } from "@/components/SocialLink";
+import Navigation from "@/public/navigation.json";
 
-const AppFooter = () => {
-  return (
-    <div className="w-full  bg-blueBase flex flex-row justify-center">
-      <div className="w-11/12 sm:w-4/5 h-full flex flex-col items-center py-4 gap-4">
-        <h6 className="w-full text-base font-normal uppercase text-secondary text-center">
-          Pratite nas
-        </h6>
-        <div className="w-full flex flex-row justify-between ">
-          <nav className="w-fit flex flex-col gap-2 items-start">
-            {Navigation.map((link) => (
-              <li
-                key={link.name}
-                className="text-base font-normal text-secondary uppercase list-none"
-              >
-                <Link href={link.href}>{link.name}</Link>
-              </li>
-            ))}
-          </nav>
+const INFO_LINKS = [
+  { name: "Kontakt", href: "/kontakt" },
+  { name: "Marketing", href: "/marketing" },
+  { name: "O nama", href: "/o-nama" },
+  { name: "Politika privatnosti", href: "/politika-privatnosti" },
+];
 
-          <div className="flex flex-row w-full pl-4 gap-4 justify-center">
-            <Link
-              href={"https://facebook.com/"}
-              passHref={true}
-              target={"_blank"}
-            >
-              <Image
-                src={FacebookIcon}
-                alt={"facebook icon"}
-                width={24}
-                height={24}
-                style={{ objectFit: "contain" }}
-              />
-            </Link>
-            <Link
-              href={"https://instagram.com/"}
-              passHref={true}
-              target={"_blank"}
-            >
-              <Image
-                src={InstagramIcon}
-                alt={"facebook icon"}
-                width={24}
-                height={24}
-                style={{ objectFit: "contain" }}
-              />
-            </Link>
-            <Link
-              href={"https://youtube.com/"}
-              passHref={true}
-              target={"_blank"}
-            >
-              <Image
-                src={YoutubeIcon}
-                alt={"facebook icon"}
-                width={28}
-                height={23}
-                style={{ objectFit: "cover" }}
-              />
-            </Link>
-          </div>
+const linkClass = "text-sm text-secondary/70 transition-colors duration-200 hover:text-volt";
 
-          <div className="w-fit flex flex-col gap-2 items-start">
-            <Link
-              href={"/kontakt"}
-              className="text-base uppercase text-secondary font-normal"
-            >
-              Kontakt
-            </Link>
-            <Link
-              href={"/marketing"}
-              className="text-base uppercase text-secondary font-normal "
-            >
-              Marketing
-            </Link>
-            <Link
-              href={"/o-nama"}
-              className="text-base uppercase text-secondary font-normal "
-            >
-              O Nama
-            </Link>
-          </div>
+const LinkColumn = ({ title, links, label }) => (
+  <nav aria-label={label}>
+    <h2 className="kicker mb-4 text-volt">{title}</h2>
+    <ul className="flex flex-col gap-2.5">
+      {links.map((link) => (
+        <li key={link.name}>
+          <Link href={link.href} className={linkClass}>
+            {link.name}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </nav>
+);
+
+const AppFooter = () => (
+  <footer className="grain w-full bg-navy-900 text-secondary">
+    <div className="shell py-14">
+      <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+        <div className="flex flex-col gap-4">
+          <span className="display text-4xl leading-none text-secondary">
+            Time<span className="text-volt">Out</span>
+          </span>
+          <p className="max-w-xs text-sm leading-relaxed text-secondary/60">
+            Sportske vesti, analize i ekskluzivne priče — na jednom mestu, u saradnji sa
+            SportKlubom.
+          </p>
         </div>
 
-        <div className="w-full h-px bg-secondary" />
+        <LinkColumn title="Sekcije" links={Navigation} label="Sekcije" />
+        <LinkColumn title="Informacije" links={INFO_LINKS} label="Informacije" />
 
-        <p className="w-full text-base text-secondary font-normal text-start">
-          &copy;2024 Copyright TimeOut
-        </p>
+        <div>
+          <h2 className="kicker mb-4 text-volt">Pratite nas</h2>
+          <div className="flex items-center gap-3">
+            {SOCIALS.map((item) => (
+              <SocialLink key={item.name} item={item} variant="pill" size={18} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-12 h-px w-full bg-white/10" />
+
+      <div className="mt-6 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+        <p className="text-sm text-secondary/50">&copy; 2026 TimeOut. Sva prava zadržana.</p>
+        <p className="kicker text-secondary/35">Izvor vesti · SportKlub</p>
       </div>
     </div>
-  );
-};
+  </footer>
+);
 
 export default AppFooter;
